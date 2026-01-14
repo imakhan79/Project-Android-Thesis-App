@@ -8,8 +8,9 @@ const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
 
 export const analyzeApkStatic = async (manifestText: string, layoutSummary: string) => {
   try {
+    // Fixed: Upgraded model to gemini-3-pro-preview for complex reasoning task as per guidelines
     const response = await ai.models.generateContent({
-      model: 'gemini-3-flash-preview',
+      model: 'gemini-3-pro-preview',
       contents: `Perform static analysis on this Android APK Manifest and View Hierarchy summary. 
       Identify components and categorize them into: ${Object.values(ComponentCategory).join(', ')}.
       Assign a risk score (0-10) based on complexity and potential for breakage.
@@ -37,7 +38,9 @@ export const analyzeApkStatic = async (manifestText: string, layoutSummary: stri
       }
     });
 
-    return JSON.parse(response.text);
+    // Fixed: Accessed text property directly and added a check for undefined/empty response
+    const text = response.text;
+    return text ? JSON.parse(text) : null;
   } catch (error) {
     console.error("Gemini static analysis failed:", error);
     return null;
@@ -46,8 +49,9 @@ export const analyzeApkStatic = async (manifestText: string, layoutSummary: stri
 
 export const simulateRLEpisode = async (params: any) => {
   try {
+    // Fixed: Upgraded model to gemini-3-pro-preview for complex reasoning task as per guidelines
     const response = await ai.models.generateContent({
-      model: 'gemini-3-flash-preview',
+      model: 'gemini-3-pro-preview',
       contents: `Simulate a Hybrid RL (Actor-Critic + DDQN) exploration episode for an Android app with these parameters: ${JSON.stringify(params)}.
       Generate a sequence of 5-10 actions. 
       Include rewards, novelty scores, and fault likelihood.`,
@@ -76,8 +80,11 @@ export const simulateRLEpisode = async (params: any) => {
         }
       }
     });
-    return JSON.parse(response.text);
+    // Fixed: Accessed text property directly and added a check for undefined/empty response
+    const text = response.text;
+    return text ? JSON.parse(text) : null;
   } catch (err) {
+    console.error("Gemini RL simulation failed:", err);
     return null;
   }
 }

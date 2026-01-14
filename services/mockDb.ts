@@ -44,6 +44,29 @@ class MockDB {
       { id: 'c2', projectId: 'p1', typeCategory: ComponentCategory.RUNTIME, selector: '//RecyclerView[@id="product_list"]', riskScore: 7.2, source: 'dynamic' },
       { id: 'c3', projectId: 'p1', typeCategory: ComponentCategory.MODAL, selector: '//Dialog[@id="promo_popup"]', riskScore: 9.1, source: 'static' }
     );
+
+    // Seed mock runs and states for dynamic graph
+    const r1: Run = {
+      id: 'run1',
+      projectId: 'p1',
+      runType: RunType.DYNAMIC,
+      configJson: '{}',
+      startedAt: Date.now() - 3600000,
+      status: RunStatus.COMPLETED
+    };
+    this.runs.push(r1);
+
+    this.states.push(
+      { id: 's1', runId: 'run1', hash: 'x9f2', activityName: 'MainActivity', viewSummary: 'Home Screen' },
+      { id: 's2', runId: 'run1', hash: 'a1b3', activityName: 'ProfileActivity', viewSummary: 'User Settings' },
+      { id: 's3', runId: 'run1', hash: 'c5d6', activityName: 'ProductDetail', viewSummary: 'Item View' }
+    );
+
+    this.transitions.push(
+      { id: 't1', runId: 'run1', fromStateHash: 'x9f2', toStateHash: 'a1b3', actionType: 'CLICK', actionMeta: 'btn_profile' },
+      { id: 't2', runId: 'run1', fromStateHash: 'x9f2', toStateHash: 'c5d6', actionType: 'TAP', actionMeta: 'item_card' },
+      { id: 't3', runId: 'run1', fromStateHash: 'c5d6', toStateHash: 'x9f2', actionType: 'BACK', actionMeta: 'system' }
+    );
   }
 
   getProjects() { return this.projects; }
@@ -64,6 +87,9 @@ class MockDB {
       if (status === RunStatus.COMPLETED) run.endedAt = Date.now();
     }
   }
+
+  getStates(runId: string) { return this.states.filter(s => s.runId === runId); }
+  getTransitions(runId: string) { return this.transitions.filter(t => t.runId === runId); }
 
   getEpisodes(runId: string) { return this.episodes.filter(e => e.runId === runId); }
   addEpisode(e: EpisodeTest) { this.episodes.push(e); }
