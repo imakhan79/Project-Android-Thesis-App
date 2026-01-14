@@ -1,0 +1,7 @@
+{
+  "name": "Android Smart GUI Testing Platform",
+  "description": "A comprehensive QA and research platform for automated Android GUI exploration using Hybrid RL and Genetic Algorithm prioritization, featuring deep static and dynamic analysis.",
+  "requestFramePermissions": [
+    "camera"
+  ]
+}
