@@ -1,7 +1,8 @@
 {
-  "name": "Android Smart GUI Testing Platform",
-  "description": "A comprehensive QA and research platform for automated Android GUI exploration using Hybrid RL and Genetic Algorithm prioritization, featuring deep static and dynamic analysis.",
+  "name": "StreamForge",
+  "description": "Professional Desktop Streaming & Recording Suite with integrated Academy.",
   "requestFramePermissions": [
-    "camera"
+    "camera",
+    "microphone"
   ]
 }

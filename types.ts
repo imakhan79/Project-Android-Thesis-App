@@ -1,22 +1,62 @@
 
+export type SourceType = 'camera' | 'screen' | 'image' | 'color';
+
+export interface Source {
+  id: string;
+  type: SourceType;
+  name: string;
+  visible: boolean;
+  muted: boolean;
+  volume: number;
+  zIndex: number;
+  stream?: MediaStream;
+}
+
+export interface Scene {
+  id: string;
+  name: string;
+  sources: Source[];
+}
+
+export interface AcademyLesson {
+  id: string;
+  title: string;
+  description: string;
+  completed: boolean;
+  quiz: {
+    question: string;
+    options: string[];
+    answer: number;
+  }[];
+}
+
+export interface StreamSettings {
+  url: string;
+  key: string;
+  bitrate: number;
+  fps: number;
+  resolution: string;
+}
+
+// Fixed: Defined and exported missing core types and enums used across the application
+
 export enum ComponentCategory {
-  GESTURE = 'Gesture-sensitive',
-  RUNTIME = 'Runtime-loaded',
-  MODAL = 'Modal/Interruptive',
-  CONTEXT = 'Context-aware'
+  GESTURE = 'GESTURE',
+  RUNTIME = 'RUNTIME',
+  MODAL = 'MODAL',
+  CONTEXT = 'CONTEXT'
 }
 
 export enum RunType {
-  DYNAMIC = 'dynamic',
-  RL = 'rl',
-  GA = 'ga'
+  DYNAMIC = 'DYNAMIC',
+  RL = 'RL',
+  GA = 'GA'
 }
 
 export enum RunStatus {
-  PENDING = 'pending',
-  RUNNING = 'running',
-  COMPLETED = 'completed',
-  FAILED = 'failed'
+  COMPLETED = 'COMPLETED',
+  RUNNING = 'RUNNING',
+  FAILED = 'FAILED'
 }
 
 export interface Project {
@@ -62,7 +102,6 @@ export interface GUIState {
   hash: string;
   activityName: string;
   viewSummary: string;
-  screenshotPath?: string;
 }
 
 export interface Transition {
